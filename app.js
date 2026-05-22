@@ -45,7 +45,9 @@ function registrarPuntaje(fase, partidoId, lado, valor) {
     }
     
     localStorage.setItem('torneo_m19_perfecto', JSON.stringify(torneo));
-    dibujarTodoElTablero(); // Redibuja dinámicamente manteniendo el foco lógico
+    
+    // Dejamos que actualice los datos en vivo sin perder el foco del input
+    actualizarNombresYCopasEnCaliente();
 }
 
 function dibujarTodoElTablero() {
@@ -61,7 +63,29 @@ function dibujarTodoElTablero() {
     }
     document.getElementById('partidos-llave').innerHTML = htmlLlaves;
 
-    // ---- CÁLCULOS DINÁMICOS DE NOMBRES PARA FASE 2 ----
+    // ---- RENDER ESTRUCTURA FASE 2 (Con inputs optimizados para celular) ----
+    let htmlFase2 = "";
+    ['G1','G2','G3','G4','G5','G6'].forEach(id => {
+        const resL = torneo[id].resL !== null ? torneo[id].resL : "";
+        const resV = torneo[id].resV !== null ? torneo[id].resV : "";
+
+        htmlFase2 += `
+            <div class="partido-row">
+                <span class="id-partido">${id}</span>
+                <div class="equipo local" id="local-${id}">Por definir</div>
+                <input type="number" inputmode="numeric" value="${resL}" placeholder="-" oninput="registrarPuntaje('fase2', '${id}', 'resL', this.value)">
+                <input type="number" inputmode="numeric" value="${resV}" placeholder="-" oninput="registrarPuntaje('fase2', '${id}', 'resV', this.value)">
+                <div class="equipo visita" id="visita-${id}">Por definir</div>
+            </div>
+        `;
+    });
+    document.getElementById('partidos-reclasificacion').innerHTML = htmlFase2;
+
+    actualizarNombresYCopasEnCaliente();
+}
+
+// Actualiza los textos de los clasificados dinámicamente sin recargar los inputs
+function actualizarNombresYCopasEnCaliente() {
     const deponerPerdedor = (p) => {
         if (p.resL === null || p.resV === null) return "Por definir";
         return p.resL > p.resV ? EQUIPOS[p.visita] : EQUIPOS[p.local];
@@ -74,7 +98,6 @@ function dibujarTodoElTablero() {
         return ganoLocal ? EQUIPOS[p.visita] : EQUIPOS[p.local];
     };
 
-    // Cruces oficiales según la normativa de la competencia
     const nombresFase2 = {
         G1: { local: deponerPerdedor(torneo.L1), visita: deponerRepechaje(torneo.REP1, false) },
         G2: { local: deponerPerdedor(torneo.L2), visita: deponerRepechaje(torneo.REP2, false) }, 
@@ -84,24 +107,11 @@ function dibujarTodoElTablero() {
         G6: { local: deponerPerdedor(torneo.L6), visita: deponerPerdedor(torneo.L7) }
     };
 
-    // ---- RENDER DE FASE 2 (Con inputs funcionales fijados) ----
-    let htmlFase2 = "";
+    // Actualiza los nombres de los equipos de la Fase 2 en pantalla
     Object.keys(nombresFase2).forEach(id => {
-        const nombres = nombresFase2[id];
-        const resL = torneo[id].resL !== null ? torneo[id].resL : "";
-        const resV = torneo[id].resV !== null ? torneo[id].resV : "";
-
-        htmlFase2 += `
-            <div class="partido-row">
-                <span class="id-partido">${id}</span>
-                <div class="equipo local">${nombres.local}</div>
-                <input type="number" value="${resL}" placeholder="-" onchange="registrarPuntaje('fase2', '${id}', 'resL', this.value)">
-                <input type="number" value="${resV}" placeholder="-" onchange="registrarPuntaje('fase2', '${id}', 'resV', this.value)">
-                <div class="equipo visita">${nombres.visita}</div>
-            </div>
-        `;
+        document.getElementById(`local-${id}`).innerText = nombresFase2[id].local;
+        document.getElementById(`visita-${id}`).innerText = nombresFase2[id].visita;
     });
-    document.getElementById('partidos-reclasificacion').innerHTML = htmlFase2;
 
     // ---- CÁLCULO FINAL DE COPAS (PLATA Y BRONCE) ----
     let platas = [];
@@ -135,8 +145,8 @@ function inyectarFilaFase1(id, partido) {
         <div class="partido-row ${marcaHuazihul}">
             <span class="id-partido">${id}</span>
             <div class="equipo local">${EQUIPOS[partido.local]}</div>
-            <input type="number" value="${resL}" placeholder="-" onchange="registrarPuntaje('fase1', '${id}', 'resL', this.value)">
-            <input type="number" value="${resV}" placeholder="-" onchange="registrarPuntaje('fase1', '${id}', 'resV', this.value)">
+            <input type="number" inputmode="numeric" value="${resL}" placeholder="-" oninput="registrarPuntaje('fase1', '${id}', 'resL', this.value)">
+            <input type="number" inputmode="numeric" value="${resV}" placeholder="-" oninput="registrarPuntaje('fase1', '${id}', 'resV', this.value)">
             <div class="equipo visita">${EQUIPOS[partido.visita]}</div>
         </div>
     `;
