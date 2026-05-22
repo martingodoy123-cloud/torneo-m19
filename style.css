@@ -1,0 +1,70 @@
+body { 
+    font-family: Arial, sans-serif; 
+    background: #eceff1; 
+    padding: 20px; 
+    color: #37474f; 
+}
+.container { 
+    max-width: 800px; 
+    margin: 0 auto; 
+}
+.card { 
+    background: white; 
+    padding: 15px; 
+    border-radius: 8px; 
+    margin-bottom: 20px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
+.destacada { 
+    border-left: 5px solid #00c853; 
+}
+.partido-row { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    padding: 8px 0; 
+    border-bottom: 1px solid #f0f0f0; 
+}
+/* Estilo especial para cuando juegue Huazihul (Equipo 18) */
+.partido-huazihul { 
+    background-color: #fff9c4; 
+    font-weight: bold; 
+    border-radius: 4px; 
+    padding: 8px; 
+}
+.id-partido { 
+    font-size: 11px; 
+    color: #90a4ae; 
+    width: 45px; 
+}
+.equipo { 
+    width: 220px; 
+}
+.equipo.local { 
+    text-align: right; 
+}
+input[type="number"] { 
+    width: 50px; 
+    text-align: center; 
+    font-size: 16px; 
+    padding: 3px; 
+}
+.listas-copas { 
+    display: flex; 
+    gap: 20px; 
+}
+.oro-card { 
+    flex: 1; 
+    border-top: 4px solid #ffb300; 
+}
+.bronce-card { 
+    flex: 1; 
+    border-top: 4px solid #8d6e63; 
+}
+ul { 
+    padding-left: 20px; 
+}
+.espera { 
+    color: #78909c; 
+    font-style: italic; 
+}
