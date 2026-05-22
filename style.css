@@ -1,70 +1,171 @@
-body { 
-    font-family: Arial, sans-serif; 
-    background: #eceff1; 
-    padding: 20px; 
-    color: #37474f; 
+/* ==========================================
+   1. ESTILOS GENERALES Y MARCA DE AGUA
+   ========================================== */
+body {
+    background-color: #f4f6f9;
+    
+    /* Configuración de la marca de agua de Huazihul */
+    background-image: url('logo1.png');
+    background-repeat: no-repeat;
+    background-position: center 250px; /* Centrado y un poco abajo para que no tape títulos */
+    background-attachment: fixed;       /* Se queda quieto al hacer scroll */
+    background-size: 380px;             /* Tamaño ideal para pantallas de celulares */
+    
+    /* Efecto marca de agua suave para que no tape los textos */
+    background-blend-mode: overlay;
+    background-color: rgba(244, 246, 249, 0.92); 
+    
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    color: #333;
 }
-.container { 
-    max-width: 800px; 
-    margin: 0 auto; 
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco con leve transparencia */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
-.card { 
-    background: white; 
-    padding: 15px; 
-    border-radius: 8px; 
-    margin-bottom: 20px; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+
+h1 {
+    text-align: center;
+    color: #8b0000; /* Rojo oscuro representativo */
+    margin-bottom: 5px;
 }
-.destacada { 
-    border-left: 5px solid #00c853; 
+
+.subtitulo {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 25px;
 }
-.partido-row { 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-    padding: 8px 0; 
-    border-bottom: 1px solid #f0f0f0; 
+
+h2 {
+    color: #2c3e50;
+    border-bottom: 2px solid #8b0000;
+    padding-bottom: 5px;
+    margin-top: 30px;
+    font-size: 18px;
 }
-/* Estilo especial para cuando juegue Huazihul (Equipo 18) */
-.partido-huazihul { 
-    background-color: #fff9c4; 
-    font-weight: bold; 
-    border-radius: 4px; 
-    padding: 8px; 
+
+/* ==========================================
+   2. DISEÑO DE FILAS DE PARTIDOS (RESPONSIVE)
+   ========================================== */
+.partido-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
-.id-partido { 
-    font-size: 11px; 
-    color: #90a4ae; 
-    width: 45px; 
+
+/* Identificador del partido (L1, REP1, G1, etc.) */
+.id-partido {
+    font-weight: bold;
+    color: #7f8c8d;
+    width: 40px;
+    font-size: 12px;
 }
-.equipo { 
-    width: 220px; 
+
+/* Bloque de equipo */
+.equipo {
+    flex: 1;
+    font-size: 13px;
+    font-weight: bold;
 }
-.equipo.local { 
-    text-align: right; 
+
+.equipo.local {
+    text-align: right;
+    padding-right: 10px;
 }
-input[type="number"] { 
-    width: 50px; 
-    text-align: center; 
-    font-size: 16px; 
-    padding: 3px; 
+
+.equipo.visita {
+    text-align: left;
+    padding-left: 10px;
 }
-.listas-copas { 
-    display: flex; 
-    gap: 20px; 
+
+/* Casillas de puntaje optimizadas */
+input[type="number"] {
+    width: 45px;
+    height: 35px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    margin: 0 3px;
+    background-color: #fafafa;
+    -moz-appearance: textfield; /* Saca flechas nativas en Firefox */
 }
-.oro-card { 
-    flex: 1; 
-    border-top: 4px solid #ffb300; 
+
+/* Saca las flechas de los costados en Chrome/Safari */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
-.bronce-card { 
-    flex: 1; 
-    border-top: 4px solid #8d6e63; 
+
+input[type="number"]:focus {
+    border-color: #8b0000;
+    background-color: #fff;
+    outline: none;
 }
-ul { 
-    padding-left: 20px; 
+
+/* Destacado especial para cuando juega Huazihul */
+.partido-huazihul {
+    background-color: #fff5f5;
+    border: 1px dashed #8b0000;
 }
-.espera { 
-    color: #78909c; 
-    font-style: italic; 
+
+/* ==========================================
+   3. SECCIÓN DE LAS COPAS FINALISTAS
+   ========================================== */
+.copas-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.bloque-copa {
+    flex: 1;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.bloque-copa h3 {
+    margin-top: 0;
+    font-size: 15px;
+    text-align: center;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.bloque-copa h3.plata { color: #d4af37; }  /* Dorado/Plata */
+.bloque-copa h3.bronce { color: #cd7f32; } /* Bronce */
+
+.bloque-copa ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.bloque-copa li {
+    font-size: 12px;
+    padding: 6px 0;
+    border-bottom: 1px dashed #f0f0f0;
+    font-weight: bold;
+}
+
+.bloque-copa li:last-child {
+    border-bottom: none;
 }
